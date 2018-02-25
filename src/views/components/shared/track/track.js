@@ -11,6 +11,8 @@ import TrackList from './track-list';
 import TrackSquare from './track-square';
 import TabManager from '../../../modules/TabManager';
 
+import BasePlaylist from 'kaku-core/models/playlist/BasePlaylist';
+
 const Remote = Electron.remote;
 const Menu = Remote.Menu;
 const MenuItem = Remote.MenuItem;
@@ -90,6 +92,82 @@ class Track extends Component {
         };
       })(playlist);
 
+       let clickTrackup = ((playlist) => {         
+          return()=>{
+              
+              let onetrackplaylist = [];
+              onetrackplaylist.push(track);
+         
+              let ix = this.props.index;   
+       BasePlaylist.prototype.swapTracks = function(tracks) {
+	      if (this._tracks.length <= 0) {
+             return Promise.resolve();
+	       }
+            else {
+          
+          this._tracks.splice(ix,1);
+	      var swapedTracks = this._tracks.splice(ix-1,0,onetrackplaylist[0]);
+	      console.log('Swaped tracks - ', swapedTracks);
+
+	      this.emit('tracksUpdated');
+          
+          let noUpdate = true;
+          Player.cleanupTracks(noUpdate);
+          Player.addTracks(this._tracks);
+         
+	      resolve();
+	    return Promise.all(promises).then(() => {
+	      this.emit('tracksUpdated');
+	    });
+	  }
+	};
+    
+         playlist
+            .swapTracks()
+            .catch((error) => {
+             Notifier.alert(error);
+            });
+          }  
+      })(playlist);
+      
+      let clickTrackdown = ((playlist) => {         
+          return()=>{
+              
+              let onetrackplaylist = [];
+              onetrackplaylist.push(track);
+         
+              let ix = this.props.index;   
+       BasePlaylist.prototype.swapTracks = function(tracks) {
+	      if (this._tracks.length <= 0) {
+             return Promise.resolve();
+	       }
+            else {
+          
+          this._tracks.splice(ix,1);
+	      var swapedTracks = this._tracks.splice(ix+1,0,onetrackplaylist[0]);
+	      console.log('Swaped tracks - ', swapedTracks);
+
+	      this.emit('tracksUpdated');
+          
+          let noUpdate = true;
+          Player.cleanupTracks(noUpdate);
+          Player.addTracks(this._tracks);
+       
+	      resolve();
+	    return Promise.all(promises).then(() => {
+	      this.emit('tracksUpdated');
+	    });
+	  }
+	};
+    
+         playlist
+            .swapTracks()
+            .catch((error) => {
+             Notifier.alert(error);
+            });
+          }  
+      })(playlist);
+      
       // TODO
       // add l10n support here
       let menuItemToAddTrack = new MenuItem({
@@ -102,9 +180,20 @@ class Track extends Component {
         click: clickToRemoveTrack
       });
 
+        let menuItemTrackUp = new MenuItem({
+        label: `Move track up`,
+        click: clickTrackup
+      });
+      let menuItemTrackDown = new MenuItem({
+          label: 'Move track down',
+          click: clickTrackdown
+      });
+      
       if (PlaylistManager.isDisplaying) {
         if (PlaylistManager.activePlaylist.isSameWith(playlist)) {
           menu.append(menuItemToRemoveTrack);
+          menu.append(menuItemTrackUp);
+          menu.append(menuItemTrackDown);
         }
         else {
           menu.insert(0, menuItemToAddTrack);
