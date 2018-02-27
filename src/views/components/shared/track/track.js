@@ -92,81 +92,82 @@ class Track extends Component {
         };
       })(playlist);
 
-       let clickTrackup = ((playlist) => {         
-          return()=>{
-              
+   let clickTrackup = ((playlist) => {
+          return ()=> {
+		  
               let onetrackplaylist = [];
               onetrackplaylist.push(track);
-         
-              let ix = this.props.index;   
-       BasePlaylist.prototype.swapTracks = function(tracks) {
-	      if (this._tracks.length <= 0) {
-             return Promise.resolve();
-	       }
-            else {
-          
-          this._tracks.splice(ix,1);
-	      var swapedTracks = this._tracks.splice(ix-1,0,onetrackplaylist[0]);
-	      console.log('Swaped tracks - ', swapedTracks);
 
-	      this.emit('tracksUpdated');
-          
-          let noUpdate = true;
-          Player.cleanupTracks(noUpdate);
-          Player.addTracks(this._tracks);
-         
-	      resolve();
-	    return Promise.all(promises).then(() => {
-	      this.emit('tracksUpdated');
-	    });
-	  }
-	};
-    
-         playlist
-            .swapTracks()
-            .catch((error) => {
-             Notifier.alert(error);
-            });
-          }  
-      })(playlist);
-      
-      let clickTrackdown = ((playlist) => {         
-          return()=>{
-              
+              let ix = this.props.index;
+              BasePlaylist.prototype.swapTracks = function(tracks) {
+                      if (this._tracks.length <= 0) {
+                        return Promise.resolve();
+                      }
+                      else {
+
+                        this._tracks.splice(ix,1);
+                        var swapedTracks = this._tracks.splice(ix-1,0,onetrackplaylist[0]);
+                        console.log('Swaped tracks - ', swapedTracks);
+
+                        this.emit('tracksUpdated');
+
+                        let noUpdate = true;
+                        Player.cleanupTracks(noUpdate);
+                        Player.addTracks(this._tracks);
+
+                        resolve();
+                        return Promise.all(promises).then(() => {
+                          this.emit('tracksUpdated');
+                        });
+                      }
+                    };
+
+              playlist
+                 .swapTracks()
+                 .catch((error) => {
+                    Notifier.alert(error);
+                  });
+            }
+        })(playlist);
+
+      let clickTrackdown = ((playlist) => {
+          return ()=> {
+
               let onetrackplaylist = [];
               onetrackplaylist.push(track);
-         
-              let ix = this.props.index;   
-       BasePlaylist.prototype.swapTracks = function(tracks) {
-	      if (this._tracks.length <= 0) {
-             return Promise.resolve();
-	       }
-            else {
-          
-          this._tracks.splice(ix,1);
-	      var swapedTracks = this._tracks.splice(ix+1,0,onetrackplaylist[0]);
-	      console.log('Swaped tracks - ', swapedTracks);
 
-	      this.emit('tracksUpdated');
-          
-          let noUpdate = true;
-          Player.cleanupTracks(noUpdate);
-          Player.addTracks(this._tracks);
-       
-	      resolve();
-	    return Promise.all(promises).then(() => {
-	      this.emit('tracksUpdated');
-	    });
-	  }
-	};
-    
-         playlist
-            .swapTracks()
-            .catch((error) => {
-             Notifier.alert(error);
-            });
-          }  
-      })(playlist);
+              let ix = this.props.index;
+              BasePlaylist.prototype.swapTracks = function(tracks) {
+                      if (this._tracks.length <= 0) {
+                        return Promise.resolve();
+                      }
+                      else {
+
+                        this._tracks.splice(ix,1);
+                        var swapedTracks = this._tracks.splice(ix+1,0,onetrackplaylist[0]);
+                        console.log('Swaped tracks - ', swapedTracks);
+
+                        this.emit('tracksUpdated');
+
+                        let noUpdate = true;
+                        Player.cleanupTracks(noUpdate);
+                        Player.addTracks(this._tracks);
+
+                        resolve();
+                        return Promise.all(promises).then(() => {
+                          this.emit('tracksUpdated');
+                        });
+                      }
+                    };
+
+              playlist
+                 .swapTracks()
+                 .catch((error) => {
+                    Notifier.alert(error);
+                  });
+            }
+        })(playlist);
+
       
       // TODO
       // add l10n support here
@@ -185,7 +186,7 @@ class Track extends Component {
         click: clickTrackup
       });
       let menuItemTrackDown = new MenuItem({
-          label: 'Move track down',
+          label: `Move track down`,
           click: clickTrackdown
       });
       
