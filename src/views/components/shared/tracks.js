@@ -8,6 +8,9 @@ import ActionButton from './action-button';
 import TrackModeButton from './track-mode-button';
 import AddToPlayQueueButton from './add-to-play-queue-button';
 
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
+
 class TracksComponent extends Component {
   constructor(props) {
     super(props);
@@ -148,4 +151,4 @@ TracksComponent.defaultProps = {
   tracks: []
 };
 
-module.exports = TracksComponent;
+module.exports = DragDropContext(HTML5Backend)(TracksComponent);
