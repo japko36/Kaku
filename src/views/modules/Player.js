@@ -193,7 +193,7 @@ Player.prototype.cleanupTracks = function(noUpdate) {
   }
 };
 
-Player.prototype.playNextTrack = function(forceIndex) {
+Player.prototype.playNextTrack = function(forceIndex,time) {
   if (this.disabled) {
     return;
   }
@@ -203,7 +203,8 @@ Player.prototype.playNextTrack = function(forceIndex) {
     // TODO
     // double check this randomIndex later
     this.randomIndex = this.trackIndex;
-    this.play(this.tracks[this.trackIndex]);
+    let currentTime = time || 0;
+    this.play(this.tracks[this.trackIndex], currentTime);
     return;
   }
 
@@ -236,7 +237,8 @@ Player.prototype.playNextTrack = function(forceIndex) {
   }
   else if (this.mode === 'all') {
     this.trackIndex = (this.trackIndex + 1) % this.tracks.length;
-    this.play(this.tracks[this.trackIndex]);
+    let currentTime = time || 0;
+    this.play(this.tracks[this.trackIndex], currentTime);
   }
 };
 
